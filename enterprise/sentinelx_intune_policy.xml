@@ -1,0 +1,26 @@
+<Policy xmlns="http://schemas.microsoft.com/intune/deviceconfigurations/2018/07">
+  <!-- SentinelX Enterprise Microsoft Intune Custom Configuration Profile -->
+  <!-- Target: Google Chrome / Microsoft Edge for Windows & macOS -->
+  <ExtensionId>sentinelx_dlp_enterprise</ExtensionId>
+  <Settings>
+    <Setting name="telemetryBackendUrl" type="string" value="http://localhost:8000" />
+    <Setting name="enforceStrictDLP" type="boolean" value="true" />
+    <Setting name="auditModeOnly" type="boolean" value="false" />
+    <Setting name="shannonEntropyThreshold" type="float" value="4.2" />
+    <Setting name="quarantineBlockedFiles" type="boolean" value="true" />
+    <Setting name="approvedAIDomains" type="list">
+      <Item value="copilot.microsoft.com" />
+    </Setting>
+    <Setting name="restrictedDestinations" type="list">
+      <Item value="chat.openai.com" />
+      <Item value="claude.ai" />
+      <Item value="pastebin.com" />
+    </Setting>
+    <Setting name="customCompanyCodenames" type="list">
+      <Item value="Aurora-X" />
+      <Item value="Project-Titan" />
+      <Item value="Apollo-X" />
+    </Setting>
+    <Setting name="telemetrySampleRate" type="integer" value="100" />
+  </Settings>
+</Policy>

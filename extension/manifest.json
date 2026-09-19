@@ -1,0 +1,61 @@
+{
+  "manifest_version": 3,
+  "name": "SentinelX",
+  "version": "1.0.0",
+  "description": "Enterprise browser telemetry & real-time contextual DLP engine. Zero-knowledge client-side policy evaluation.",
+  "author": "SentinelX Security",
+
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "SentinelX — Active Shield",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+
+  "background": {
+    "service_worker": "background/service-worker.js",
+    "type": "module"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": [
+        "detectors/entropy.js",
+        "detectors/deterministic.js",
+        "detectors/destination.js",
+        "detectors/redactor.js",
+        "detectors/semantic.js",
+        "detectors/classifier.js",
+        "engine/risk-engine.js",
+        "engine/policy-engine.js",
+        "content/shadow-hud.js",
+        "content/monitor.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": false
+    }
+  ],
+
+  "permissions": [
+    "storage",
+    "activeTab"
+  ],
+
+  "storage": {
+    "managed_schema": "managed_schema.json"
+  },
+
+  "host_permissions": [
+    "<all_urls>"
+  ]
+}

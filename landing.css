@@ -1,0 +1,601 @@
+/* ================================================================
+   SentinelX Landing Page — Editorial Bento Agency Style
+   Inspired by Masud Rana's Dribbble Agency Landing Page Design
+   Typography: Syne (800) + Space Grotesk + Plus Jakarta Sans
+   ================================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Space+Grotesk:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* Palette exact to Dribbble reference */
+  --frame-bg: #212529;
+  --sand-hero: #e8d7c1;
+  --sand-dark: #1a1714;
+
+  --sage-showcase: #94a787;
+  --sage-dark: #192415;
+
+  --dark-module: #181e25;
+  --terracotta: #a3715c;
+  --sage-stat: #859b79;
+
+  --cyan-accent: #62c5da;
+  --yellow-accent: #f5e468;
+  --purple-accent: #6b63d6;
+
+  --radius-card: 26px;
+  --radius-inner: 16px;
+  --radius-pill: 40px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--frame-bg);
+  font-family: 'Space Grotesk', -apple-system, sans-serif;
+  color: #ffffff;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 20px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ================================================================
+   BENTO CONTAINER
+   ================================================================ */
+
+.bento-frame {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.bento-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.bento-card {
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  position: relative;
+}
+
+/* ================================================================
+   TOP ROW: HERO CARD (LEFT 62%) + SHOWCASE CARD (RIGHT 38%)
+   ================================================================ */
+
+.bento-top-row {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 20px;
+}
+
+/* ── HERO CARD ───────────────────────────────────────────────── */
+
+.card-hero {
+  background: var(--sand-hero);
+  color: var(--sand-dark);
+  padding: 26px 36px 36px 36px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 520px;
+}
+
+/* Inner Navbar */
+.hero-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.brand-glyph {
+  width: 24px;
+  height: 24px;
+}
+
+.brand-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--sand-dark);
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.nav-item {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--sand-dark);
+  text-decoration: none;
+  opacity: 0.75;
+  transition: opacity 0.15s ease;
+}
+
+.nav-item:hover, .nav-item.active {
+  opacity: 1;
+}
+
+.nav-cta-btn {
+  background: var(--sand-dark);
+  color: var(--sand-hero);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  padding: 8px 18px;
+  border-radius: var(--radius-pill);
+  transition: transform 0.15s ease;
+}
+
+.nav-cta-btn:hover {
+  transform: translateY(-1px);
+}
+
+/* Hero Body */
+.hero-body {
+  margin-top: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.hero-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 46px;
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  color: var(--sand-dark);
+  text-transform: uppercase;
+  max-width: 680px;
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.action-btn-primary {
+  background: transparent;
+  color: var(--sand-dark);
+  border: 1.5px solid var(--sand-dark);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 10px 22px;
+  border-radius: var(--radius-pill);
+  transition: all 0.15s ease;
+}
+
+.action-btn-primary:hover {
+  background: var(--sand-dark);
+  color: var(--sand-hero);
+}
+
+.action-btn-secondary {
+  color: var(--sand-dark);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  opacity: 0.8;
+  padding: 10px 14px;
+}
+
+.action-btn-secondary:hover {
+  opacity: 1;
+}
+
+/* Overlapping Decorative Cards (From Dribbble shot) */
+.hero-visual-strip {
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+  margin-top: 14px;
+}
+
+.floating-badge-pill {
+  background: #ffffff;
+  color: var(--sand-dark);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.pill-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10b981;
+}
+
+.mini-preview-card {
+  padding: 12px 16px;
+  border-radius: var(--radius-inner);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.card-yellow {
+  background: var(--yellow-accent);
+  color: #171513;
+  width: 170px;
+}
+
+.card-cyan {
+  background: var(--cyan-accent);
+  color: #171513;
+  width: 150px;
+}
+
+.mini-card-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8.5px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  opacity: 0.7;
+}
+
+.mini-card-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.mini-card-val {
+  font-family: 'Syne', sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.mini-card-sub {
+  font-size: 9px;
+  font-weight: 600;
+  opacity: 0.8;
+}
+
+/* ── SHOWCASE CARD WITH MAIN VIDEO ───────────────────────────── */
+
+.card-showcase {
+  background: var(--sage-showcase);
+  color: var(--sage-dark);
+  padding: 26px 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.showcase-header {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.abstract-shapes {
+  display: flex;
+  gap: 6px;
+}
+
+.shape-arch {
+  width: 32px;
+  height: 32px;
+  background: #ffffff;
+  border-radius: 32px 32px 0 0;
+}
+
+.shape-half-circle {
+  width: 32px;
+  height: 16px;
+  background: var(--terracotta);
+  border-radius: 0 0 32px 32px;
+  align-self: flex-end;
+}
+
+.showcase-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 26px;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--sage-dark);
+}
+
+/* Main Video Player */
+.video-container {
+  width: 100%;
+  margin: 16px 0;
+  border-radius: var(--radius-inner);
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  background: #000000;
+}
+
+.hero-video {
+  width: 100%;
+  display: block;
+  max-height: 240px;
+  object-fit: cover;
+}
+
+.video-caption-bar {
+  background: rgba(0, 0, 0, 0.85);
+  color: #ffffff;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.video-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ef4444;
+  animation: pulse-rec 1.8s infinite;
+}
+
+@keyframes pulse-rec {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.showcase-features {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.feature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.feature-bullet {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+
+.bullet-purple { background: var(--purple-accent); }
+.bullet-sand   { background: var(--sand-hero); }
+
+.feature-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.feature-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 12.5px;
+  font-weight: 800;
+  color: var(--sage-dark);
+}
+
+.feature-desc {
+  font-size: 11px;
+  color: var(--sage-dark);
+  opacity: 0.85;
+  line-height: 1.35;
+}
+
+/* ================================================================
+   BOTTOM ROW: BENTO METRICS & ARCH MODULES
+   ================================================================ */
+
+.bento-bottom-row {
+  display: grid;
+  grid-template-columns: 1.3fr 0.8fr 1.1fr 0.8fr;
+  gap: 20px;
+}
+
+/* Card 1: Dark Strategy */
+.card-dark {
+  background: var(--dark-module);
+  color: #ffffff;
+  padding: 26px 24px;
+  display: flex;
+  align-items: center;
+}
+
+.card-dark-body {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  gap: 16px;
+}
+
+.card-dark-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  max-width: 200px;
+}
+
+.cyan-badge-module {
+  width: 54px;
+  height: 54px;
+  border-radius: 16px;
+  background: var(--cyan-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.cyan-badge-circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--yellow-accent);
+}
+
+/* Card 2: Terracotta Stat Card */
+.card-terracotta {
+  background: var(--terracotta);
+  color: #ffffff;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stat-circle-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.stat-circle {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stat-num {
+  font-family: 'Syne', sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.stat-label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+
+/* Card 3: Arch Photo Media */
+.card-arch-media {
+  background: var(--frame-bg);
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+
+.arch-frame {
+  width: 90px;
+  height: 120px;
+  border-radius: 90px 90px 0 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.arch-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.arch-reverse {
+  border-radius: 0 0 90px 90px;
+}
+
+.arch-solid {
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+}
+
+/* Card 4: Sage Stat Card */
+.card-sage {
+  background: var(--sage-stat);
+  color: #ffffff;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.circle-white {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+/* ================================================================
+   RESPONSIVE
+   ================================================================ */
+
+@media (max-width: 1100px) {
+  .bento-top-row {
+    grid-template-columns: 1fr;
+  }
+  .bento-bottom-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .hero-title {
+    font-size: 34px;
+  }
+}
+
+@media (max-width: 640px) {
+  .bento-bottom-row {
+    grid-template-columns: 1fr;
+  }
+  .nav-links {
+    display: none;
+  }
+}

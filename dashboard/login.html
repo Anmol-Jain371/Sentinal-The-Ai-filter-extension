@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SentinelX — SOC Login</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #F0F2F8;
+      --surface: #FFFFFF;
+      --navy:    #0C1523;
+      --primary: #1A56DB;
+      --border:  #E2E6EF;
+      --text-1:  #0C1523;
+      --text-2:  #3D4E6B;
+      --text-3:  #94A3B8;
+      --allow:   #059669;
+      --block:   #DC2626;
+      --radius:  10px;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-image: radial-gradient(circle at 1px 1px, rgba(26,86,219,0.07) 1px, transparent 0);
+      background-size: 28px 28px;
+    }
+
+    .login-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 48px 44px 40px;
+      width: 380px;
+      box-shadow: 0 4px 24px rgba(12,21,35,0.08), 0 1px 4px rgba(12,21,35,0.04);
+      border-top: 4px solid var(--primary);
+    }
+
+    .logo-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .logo-shield {
+      width: 36px;
+      height: 36px;
+      background: var(--navy);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-name {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--text-1);
+    }
+
+    .login-subtitle {
+      font-size: 12px;
+      color: var(--text-3);
+      font-family: 'IBM Plex Mono', monospace;
+      margin-bottom: 32px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .field-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-2);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .field-input {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--bg);
+      color: var(--text-1);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 13px;
+      outline: none;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+      margin-bottom: 20px;
+    }
+    .field-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(26,86,219,0.10);
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 12px;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: -0.01em;
+      transition: background 0.15s ease, transform 0.1s ease;
+    }
+    .login-btn:hover { background: #1447B8; }
+    .login-btn:active { transform: scale(0.99); }
+    .login-btn:disabled { background: var(--text-3); cursor: not-allowed; }
+
+    .error-msg {
+      margin-top: 12px;
+      padding: 10px 14px;
+      background: rgba(220,38,38,0.07);
+      border: 1px solid rgba(220,38,38,0.20);
+      border-radius: 8px;
+      font-size: 12.5px;
+      color: var(--block);
+      font-family: 'IBM Plex Mono', monospace;
+      display: none;
+    }
+
+    .zero-trust-note {
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      font-size: 10.5px;
+      color: var(--text-3);
+      font-family: 'IBM Plex Mono', monospace;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    .status-dot {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background: var(--allow);
+      border-radius: 50%;
+      margin-right: 5px;
+      animation: pulse-dot 2s infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-card">
+    <div class="logo-row">
+      <div class="logo-shield">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1A56DB" stroke-width="2.5">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        </svg>
+      </div>
+      <div class="logo-name">SentinelX</div>
+    </div>
+    <div class="login-subtitle">SOC Dashboard — Authenticated Access</div>
+
+    <form id="loginForm" autocomplete="off">
+      <label class="field-label" for="passwordInput">Admin Password</label>
+      <input
+        type="password"
+        id="passwordInput"
+        class="field-input"
+        placeholder="Enter admin password"
+        autocomplete="current-password"
+        required
+      />
+      <button type="submit" class="login-btn" id="loginBtn">Access Dashboard</button>
+      <div class="error-msg" id="errorMsg">Invalid credentials. Access denied.</div>
+    </form>
+
+    <div class="zero-trust-note">
+      <span class="status-dot"></span>
+      Zero-plaintext DLP engine active
+      <br/>
+      SOC 2 Type II &nbsp;|&nbsp; ISO/IEC 27001:2022 &nbsp;|&nbsp; GDPR Art. 32
+    </div>
+  </div>
+
+  <script>
+    'use strict';
+
+    const BACKEND_URL = 'http://localhost:8000';
+
+    // If already logged in, redirect immediately
+    const existingToken = localStorage.getItem('sx_jwt');
+    if (existingToken) {
+      fetch(`${BACKEND_URL}/auth/verify`, {
+        headers: { Authorization: `Bearer ${existingToken}` }
+      })
+        .then(r => { if (r.ok) window.location.href = './index.html'; })
+        .catch(() => {});
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('loginBtn');
+      const errEl = document.getElementById('errorMsg');
+      const password = document.getElementById('passwordInput').value;
+
+      btn.disabled = true;
+      btn.textContent = 'Authenticating...';
+      errEl.style.display = 'none';
+
+      try {
+        const res = await fetch(`${BACKEND_URL}/auth/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password }),
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          localStorage.setItem('sx_jwt', data.access_token);
+          window.location.href = './index.html';
+        } else {
+          errEl.style.display = 'block';
+          document.getElementById('passwordInput').value = '';
+          document.getElementById('passwordInput').focus();
+        }
+      } catch (err) {
+        errEl.textContent = 'Backend unreachable. Ensure the server is running.';
+        errEl.style.display = 'block';
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Access Dashboard';
+      }
+    });
+  </script>
+</body>
+</html>

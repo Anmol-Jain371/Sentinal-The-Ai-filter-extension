@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SentinelX — Security Interception Workbench</title>
+  <meta name="description" content="SentinelX Security Interception Studio — Live Pre-DOM Egress Protection Testing Bed">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Space+Grotesk:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="harness.css">
+</head>
+<body>
+
+  <!-- ================================================================
+       HEADER & MONITORED EGRESS TICKER
+  ================================================================ -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="../index.html" class="logo" style="text-decoration:none;">
+        <div class="logo-badge">SX</div>
+        <div>
+          <div class="logo-name">SentinelX</div>
+          <div class="logo-sub">INTERCEPTION STUDIO</div>
+        </div>
+      </a>
+
+      <!-- Live Monitored Egress Ticker -->
+      <div class="ticker-bar">
+        <div class="ticker-track">
+          <div class="ticker-item"><div class="ticker-bullet"></div><span>OPENAI CHATGPT</span> (Egress Intercept)</div>
+          <div class="ticker-item"><div class="ticker-bullet"></div><span>ANTHROPIC CLAUDE</span> (Monitored)</div>
+          <div class="ticker-item"><div class="ticker-bullet"></div><span>AWS MANAGEMENT CONSOLE</span> (Credential Shield)</div>
+          <div class="ticker-item"><div class="ticker-bullet"></div><span>GITHUB CODESPACES</span> (Repo Shield)</div>
+          <div class="ticker-item"><div class="ticker-bullet"></div><span>SLACK WEB</span> (DLP Active)</div>
+          <div class="ticker-item"><div class="ticker-bullet"></div><span>SALESFORCE</span> (PII Quarantine)</div>
+          <div class="ticker-item"><div class="ticker-bullet"></div><span>OKTA SSO</span> (Token Armor)</div>
+          <!-- Loop -->
+          <div class="ticker-item"><div class="ticker-bullet"></div><span>OPENAI CHATGPT</span> (Egress Intercept)</div>
+          <div class="ticker-item"><div class="ticker-bullet"></div><span>ANTHROPIC CLAUDE</span> (Monitored)</div>
+          <div class="ticker-item"><div class="ticker-bullet"></div><span>AWS MANAGEMENT CONSOLE</span> (Credential Shield)</div>
+          <div class="ticker-item"><div class="ticker-bullet"></div><span>GITHUB CODESPACES</span> (Repo Shield)</div>
+          <div class="ticker-item"><div class="ticker-bullet"></div><span>SLACK WEB</span> (DLP Active)</div>
+          <div class="ticker-item"><div class="ticker-bullet"></div><span>SALESFORCE</span> (PII Quarantine)</div>
+          <div class="ticker-item"><div class="ticker-bullet"></div><span>OKTA SSO</span> (Token Armor)</div>
+        </div>
+      </div>
+
+      <div class="header-right">
+        <div class="status-chip" id="extensionStatus">
+          <span class="status-dot"></span>
+          Extension Connected
+        </div>
+        <a href="../dashboard/index.html" class="dashboard-link-btn" target="_blank">
+          SOC Console
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+            <polyline points="15 3 21 3 21 9"></polyline>
+            <line x1="10" y1="14" x2="21" y2="3"></line>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================================================================
+       STUDIO CONTROL BAR
+  ================================================================ -->
+  <section class="studio-bar">
+    <div class="studio-header">
+      <div class="studio-title-area">
+        <div class="studio-tag">// ADVERSARIAL TESTING BED</div>
+        <h1 class="studio-title">Security Interception Workbench</h1>
+        <p class="studio-desc">
+          Test real-time keystroke and paste interception across simulated enterprise surfaces.
+          Click <strong>Inject Payload</strong> to simulate live transmission into interactive targets.
+        </p>
+      </div>
+
+      <div class="studio-meta-strip">
+        <div class="meta-pill">
+          <div class="meta-pill-label">ENGINE LATENCY</div>
+          <div class="meta-pill-value blue">&lt; 5 ms</div>
+        </div>
+        <div class="meta-pill">
+          <div class="meta-pill-label">EVALUATION MODEL</div>
+          <div class="meta-pill-value yellow">100% In-Browser</div>
+        </div>
+        <div class="meta-pill">
+          <div class="meta-pill-label">SOC EGRESS</div>
+          <div class="meta-pill-value">Zero Plaintext</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Category Filter Tabs -->
+    <div class="scenario-filters">
+      <button class="filter-btn active" data-filter="all">All Payloads (11)</button>
+      <button class="filter-btn" data-filter="credentials">Credentials & Secrets</button>
+      <button class="filter-btn" data-filter="pii">PII & Financials</button>
+      <button class="filter-btn" data-filter="ip">Proprietary IP</button>
+      <button class="filter-btn" data-filter="evasion">Adversarial Evasion</button>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       MAIN WORKBENCH LAYOUT
+  ================================================================ -->
+  <main class="main-layout">
+
+    <!-- ── LEFT: Test Scenarios ─────────────────────────────────── -->
+    <aside class="scenarios-panel">
+      <div class="panel-header">
+        <h2 class="panel-title">Payload Injector Matrix</h2>
+        <p class="panel-sub">Select payload to copy or inject directly into active target</p>
+      </div>
+
+      <!-- Benign / Safe -->
+      <div class="scenario-group" data-cat="all">
+        <div class="group-label">ALLOW / BENIGN</div>
+        <div class="scenario-card" data-cat="all">
+          <div class="scenario-top">
+            <span class="scenario-name">Safe Technical Query</span>
+            <span class="scenario-badge badge-allow">Risk 5</span>
+          </div>
+          <div class="scenario-desc">Benign algorithmic question (BFS vs DFS graph traversal)</div>
+          <div class="scenario-actions">
+            <button class="btn-action-copy" data-scenario="safe_query">Copy</button>
+            <button class="btn-action-inject" data-scenario="safe_query">Inject Payload</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Credentials & Keys -->
+      <div class="scenario-group" data-cat="credentials">
+        <div class="group-label">BLOCK / CREDENTIALS & KEYS</div>
+
+        <div class="scenario-card" data-cat="credentials">
+          <div class="scenario-top">
+            <span class="scenario-name">AWS Root Credentials</span>
+            <span class="scenario-badge badge-block">Risk 97</span>
+          </div>
+          <div class="scenario-desc">Live format AWS_ACCESS_KEY_ID + SECRET_ACCESS_KEY</div>
+          <div class="scenario-actions">
+            <button class="btn-action-copy" data-scenario="aws_credentials">Copy</button>
+            <button class="btn-action-inject" data-scenario="aws_credentials">Inject Payload</button>
+          </div>
+        </div>
+
+        <div class="scenario-card" data-cat="credentials">
+          <div class="scenario-top">
+            <span class="scenario-name">Production DB URI</span>
+            <span class="scenario-badge badge-block">Risk 95</span>
+          </div>
+          <div class="scenario-desc">PostgreSQL connection string with plaintext password</div>
+          <div class="scenario-actions">
+            <button class="btn-action-copy" data-scenario="db_connection">Copy</button>
+            <button class="btn-action-inject" data-scenario="db_connection">Inject Payload</button>
+          </div>
+        </div>
+
+        <div class="scenario-card" data-cat="credentials">
+          <div class="scenario-top">
+            <span class="scenario-name">RSA 2048-Bit Private Key</span>
+            <span class="scenario-badge badge-block">Risk 99</span>
+          </div>
+          <div class="scenario-desc">PEM-encoded private key cryptographic block</div>
+          <div class="scenario-actions">
+            <button class="btn-action-copy" data-scenario="private_key">Copy</button>
+            <button class="btn-action-inject" data-scenario="private_key">Inject Payload</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- IP & Source Code -->
+      <div class="scenario-group" data-cat="ip">
+        <div class="group-label">WARN / PROPRIETARY IP</div>
+
+        <div class="scenario-card" data-cat="ip">
+          <div class="scenario-top">
+            <span class="scenario-name">Core Auth Gateway Code</span>
+            <span class="scenario-badge badge-warn">Risk 65</span>
+          </div>
+          <div class="scenario-desc">Internal JWT signing microservice with token secret</div>
+          <div class="scenario-actions">
+            <button class="btn-action-copy" data-scenario="source_code">Copy</button>
+            <button class="btn-action-inject" data-scenario="source_code">Inject Payload</button>
+          </div>
+        </div>
+
+        <div class="scenario-card" data-cat="ip">
+          <div class="scenario-top">
+            <span class="scenario-name">M&A Strategy Leak (Aurora-X)</span>
+            <span class="scenario-badge badge-warn">Risk 70</span>
+          </div>
+          <div class="scenario-desc">Proprietary project codename with confidential ARR targets</div>
+          <div class="scenario-actions">
+            <button class="btn-action-copy" data-scenario="contextual_leak">Copy</button>
+            <button class="btn-action-inject" data-scenario="contextual_leak">Inject Payload</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PII & Financials -->
+      <div class="scenario-group" data-cat="pii">
+        <div class="group-label">WARN / PII & COMPLIANCE</div>
+
+        <div class="scenario-card" data-cat="pii">
+          <div class="scenario-top">
+            <span class="scenario-name">Customer PII Records</span>
+            <span class="scenario-badge badge-warn">Risk 72</span>
+          </div>
+          <div class="scenario-desc">Real customer names, personal emails, and phone numbers</div>
+          <div class="scenario-actions">
+            <button class="btn-action-copy" data-scenario="pii_records">Copy</button>
+            <button class="btn-action-inject" data-scenario="pii_records">Inject Payload</button>
+          </div>
+        </div>
+
+        <div class="scenario-card" data-cat="pii">
+          <div class="scenario-top">
+            <span class="scenario-name">Q4 Financial Projections</span>
+            <span class="scenario-badge badge-warn">Risk 60</span>
+          </div>
+          <div class="scenario-desc">Confidential revenue forecast and R&D budget breakdown</div>
+          <div class="scenario-actions">
+            <button class="btn-action-copy" data-scenario="financial_data">Copy</button>
+            <button class="btn-action-inject" data-scenario="financial_data">Inject Payload</button>
+          </div>
+        </div>
+
+        <div class="scenario-card" data-cat="pii">
+          <div class="scenario-top">
+            <span class="scenario-name">Bulk Customer CSV Dump</span>
+            <span class="scenario-badge badge-block">Attack 7</span>
+          </div>
+          <div class="scenario-desc">Tabular database export with 10+ customer accounts</div>
+          <div class="scenario-actions">
+            <button class="btn-action-copy" data-scenario="bulk_csv">Copy</button>
+            <button class="btn-action-inject" data-scenario="bulk_csv">Inject Payload</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Adversarial Evasion -->
+      <div class="scenario-group" data-cat="evasion">
+        <div class="group-label">ADVERSARIAL EVASION VECTORS</div>
+
+        <div class="scenario-card" data-cat="evasion">
+          <div class="scenario-top">
+            <span class="scenario-name">Base64 Obfuscated Credential</span>
+            <span class="scenario-badge badge-warn">Attack 2</span>
+          </div>
+          <div class="scenario-desc">Encoded credential designed to bypass standard regex</div>
+          <div class="scenario-actions">
+            <button class="btn-action-copy" data-scenario="base64_encoded">Copy</button>
+            <button class="btn-action-inject" data-scenario="base64_encoded">Inject Payload</button>
+          </div>
+        </div>
+
+        <div class="scenario-card" data-cat="evasion">
+          <div class="scenario-top">
+            <span class="scenario-name">Zero-Day High-Entropy Token</span>
+            <span class="scenario-badge badge-block">Attack 1</span>
+          </div>
+          <div class="scenario-desc">High Shannon entropy token (H > 4.5) with no known prefix</div>
+          <div class="scenario-actions">
+            <button class="btn-action-copy" data-scenario="high_entropy">Copy</button>
+            <button class="btn-action-inject" data-scenario="high_entropy">Inject Payload</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Benchmark Runner -->
+      <div class="benchmark-card">
+        <div class="benchmark-title">Adversarial Benchmark Runner</div>
+        <div class="benchmark-sub">Automated 7-vector evasion test suite</div>
+        <button class="run-benchmark-btn" id="runBenchmarkBtn">
+          Run Benchmark Suite
+        </button>
+        <div class="benchmark-results" id="benchmarkResults"></div>
+      </div>
+    </aside>
+
+    <!-- ── RIGHT: Simulated Environments ────────────────────────── -->
+    <div class="environments">
+
+      <!-- Target 1: AI Chat Surface -->
+      <div class="env-card" id="env-ai-chat">
+        <div class="env-header">
+          <div class="env-header-left">
+            <span class="env-tag-badge">TARGET #1</span>
+            <span class="env-name">AI Assistant Chat Console</span>
+            <span class="env-url">chat.openai.com</span>
+          </div>
+          <span class="env-dest-pill dest-external">EXTERNAL EGRESS // HIGH RISK</span>
+        </div>
+
+        <div class="chat-messages" id="chatMessages">
+          <div class="chat-msg ai-msg">
+            <div class="chat-avatar">AI</div>
+            <div class="chat-bubble">
+              Ready for transmission. Paste credentials, source code, or click "Inject Payload" on the left to watch SentinelX intercept in real time.
+            </div>
+          </div>
+        </div>
+
+        <div class="chat-input-bar">
+          <div class="chat-input" id="chatInput" contenteditable="true"
+               data-placeholder="Type message or paste payload here..."
+               role="textbox" aria-label="AI Chat Message Input"></div>
+          <button class="chat-send-btn" id="chatSend" title="Send message">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <line x1="22" y1="2" x2="11" y2="13"></line>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Target 2: Developer Debugging Terminal -->
+      <div class="env-card" id="env-code-editor">
+        <div class="env-header">
+          <div class="env-header-left">
+            <span class="env-tag-badge">TARGET #2</span>
+            <span class="env-name">Developer Cloud Terminal & Log Console</span>
+            <span class="env-url">console.cloud.internal</span>
+          </div>
+          <span class="env-dest-pill dest-medium">SEMI-TRUSTED // AUDITED</span>
+        </div>
+
+        <div class="code-editor-wrap">
+          <textarea class="code-editor" id="codeEditor"
+                    placeholder="// Paste configuration, database strings, or credentials here...&#10;// SentinelX hooks directly into clipboard and DOM events."
+                    spellcheck="false"></textarea>
+        </div>
+      </div>
+
+      <!-- Target 3: Generic Support Ticket Form -->
+      <div class="env-card" id="env-saas-form">
+        <div class="env-header">
+          <div class="env-header-left">
+            <span class="env-tag-badge">TARGET #3</span>
+            <span class="env-name">External SaaS Support Portal</span>
+            <span class="env-url">support.thirdparty-vendor.io</span>
+          </div>
+          <span class="env-dest-pill dest-unknown">UNTRUSTED THIRD-PARTY</span>
+        </div>
+
+        <form class="saas-form" onsubmit="return false">
+          <div class="form-group">
+            <label class="form-label">Subject Line</label>
+            <input type="text" class="form-input" id="formSubject" placeholder="Brief issue summary...">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Diagnostic Logs / Incident Data</label>
+            <textarea class="form-textarea" id="formDescription" rows="3" placeholder="Paste error dumps, keys, or logs here..."></textarea>
+          </div>
+          <button type="submit" class="form-submit-btn">Submit Incident Report</button>
+        </form>
+      </div>
+
+      <!-- Live Telemetry & Pipeline Output Console -->
+      <div class="analysis-panel" id="analysisPanel">
+        <div class="analysis-header">
+          <div class="analysis-title-group">
+            <div class="analysis-dot"></div>
+            <span class="analysis-title">Real-Time Inspection Pipeline</span>
+          </div>
+          <span class="analysis-sub">Local Execution Stream (Zero Backend Plaintext)</span>
+        </div>
+        <div class="analysis-body" id="analysisBody">
+          <div class="analysis-placeholder">
+            [STANDBY] Awaiting paste or injection event across simulated targets...
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Notification Toast -->
+  <div class="copy-toast" id="copyToast"></div>
+
+  <!-- Scripts -->
+  <script src="benchmark.js"></script>
+  <script>
+    // ----------------------------------------------------------------
+    // Payload Dictionary
+    // ----------------------------------------------------------------
+    const SCENARIOS = {
+      safe_query: `Explain the difference between BFS and DFS in graph traversal algorithms.
+Can you also show a simple Python example of each?`,
+
+      source_code: `# Internal Authentication Service — CONFIDENTIAL
+# Project: Helios Payment Gateway v3.2
+# DO NOT SHARE EXTERNALLY
+
+import jwt
+import redis
+from datetime import datetime, timedelta
+from config import INTERNAL_SECRET, SERVICE_KEY
+
+class AuthService:
+    def __init__(self):
+        self.redis_client = redis.Redis(host='10.0.4.21', port=6379)
+        self.token_expiry = timedelta(hours=24)
+
+    def generate_internal_token(self, user_id: str, role: str) -> str:
+        payload = {
+            "sub": user_id,
+            "role": role,
+            "service": "helios-payment",
+            "exp": datetime.utcnow() + self.token_expiry
+        }
+        return jwt.encode(payload, INTERNAL_SECRET, algorithm="HS256")
+
+    def validate_service_token(self, token: str) -> dict:
+        try:
+            return jwt.decode(token, SERVICE_KEY, algorithms=["HS256"])
+        except jwt.ExpiredSignatureError:
+            raise ValueError("Token expired")`,
+
+      pii_records: `Customer ID: 10291
+Name: Sarah Johnson
+Email: sarah.johnson@example.com
+Phone: +1 (415) 882-3910
+Account Created: 2021-03-15
+Last Purchase: 2024-08-22
+
+Customer ID: 10292
+Name: Raj Patel
+Email: raj.patel@company.co.in
+Phone: +91 98765 43210
+Account Created: 2020-11-01
+Last Purchase: 2024-06-10`,
+
+      financial_data: `Internal use only — Q4 Financial Summary (Draft)
+
+Revenue Forecast: $42,800,000
+Operating Budget: $18,500,000
+Net Profit Projection: $11,200,000
+R&D Investment: $6,300,000
+Project Aurora Budget Allocation: $4,100,000`,
+
+      aws_credentials: `AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
+AWS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+AWS_DEFAULT_REGION=ap-south-1
+S3_BUCKET=helios-internal-assets-prod`,
+
+      db_connection: `DATABASE_URL=postgres://admin:P@ssw0rd!Prod2024@db.internal.helios.io:5432/helios_production
+REDIS_URL=redis://:RedisSecret2024@cache.internal.helios.io:6379/0
+MONGODB_URI=mongodb://root:MongoPass123@10.0.4.55:27017/helios_events`,
+
+      private_key: `-----BEGIN RSA PRIVATE KEY-----
+MIIEowIBAAKCAQEA2a2rwplBQLF29amygykEMmYz0+Ygaf9yPBNaOhBKdHqFW9RY
+WHyJYYMNJMfaKeOLDGRCiRYheHTUJHdO1cg5a6ZKoMkRCQR+Ka9HmXchMqXv7Ab
+xTHSagMHFxnqKV6ZRamPDFSMHnqkaBliSdOilhVMSQLcZ37+KtZFRbIfGRs4v/3N
+EXAMPLEKEYEXAMPLEKEYEXAMPLEKEYEXAMPLEKEYEXAMPLEKEYEXAMPLEKEYEXAMPLE
+abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/==
+-----END RSA PRIVATE KEY-----`,
+
+      base64_encoded: `QVNJQVVBU01LVkdON1FGVlE3VkhXRTpOeGNUZE1WK3FucWp3RjJtSjRSWmtyWmh4WS9WUm5TRGJT`,
+
+      high_entropy: `service_token: f8Kp2!mX9vTq#Rj5@Yw7&Nz3Ls6$Vc0Gh4_Bd1Ue`,
+
+      bulk_csv: `name,email,phone,account_id,balance
+John Smith,john.smith@gmail.com,+1-555-0101,ACC-10291,45000.00
+Sarah Johnson,sarah.j@yahoo.com,+1-555-0102,ACC-10292,12800.50
+Michael Brown,m.brown@outlook.com,+1-555-0103,ACC-10293,98500.25
+Emily Davis,emily.d@company.com,+44-20-7946-0103,ACC-10294,3200.00`,
+
+      contextual_leak: `Project Codename: Aurora-X
+Launch Date: Q1 2025 (Confidential)
+Target ARR: $24M by end of 2025
+Strategic Partner: Classified under NDA
+Pricing: $180,000/year per organization`
+    };
+
+    // ----------------------------------------------------------------
+    // Clipboard & Toast
+    // ----------------------------------------------------------------
+    async function copyText(str) {
+      try {
+        await navigator.clipboard.writeText(str);
+        return true;
+      } catch {
+        const t = document.createElement('textarea');
+        t.value = str;
+        t.style.position = 'fixed';
+        t.style.opacity = '0';
+        document.body.appendChild(t);
+        t.select();
+        const ok = document.execCommand('copy');
+        document.body.removeChild(t);
+        return ok;
+      }
+    }
+
+    function showToast(msg, type = 'success') {
+      const toast = document.getElementById('copyToast');
+      toast.textContent = msg;
+      toast.className = `copy-toast visible toast-${type}`;
+      setTimeout(() => toast.className = 'copy-toast', 2500);
+    }
+
+    // ----------------------------------------------------------------
+    // Direct Inject Simulation
+    // ----------------------------------------------------------------
+    function directInject(payload, scenarioKey) {
+      const chatInput = document.getElementById('chatInput');
+
+      if (chatInput) {
+        chatInput.innerText = payload;
+        chatInput.focus();
+
+        const dt = new DataTransfer();
+        dt.setData('text/plain', payload);
+        const pasteEvent = new ClipboardEvent('paste', {
+          bubbles: true,
+          cancelable: true,
+          clipboardData: dt
+        });
+        chatInput.dispatchEvent(pasteEvent);
+      }
+
+      simulateAnalysis(payload);
+      showToast(`Injected "${scenarioKey.replace(/_/g, ' ')}" into active target`, 'success');
+    }
+
+    // Bind Copy & Direct Inject
+    document.querySelectorAll('.btn-action-copy').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const k = btn.dataset.scenario;
+        const text = SCENARIOS[k];
+        if (text) {
+          await copyText(text);
+          showToast(`Copied "${k.replace(/_/g, ' ')}" to clipboard`);
+        }
+      });
+    });
+
+    document.querySelectorAll('.btn-action-inject').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const k = btn.dataset.scenario;
+        const text = SCENARIOS[k];
+        if (text) {
+          directInject(text, k);
+        }
+      });
+    });
+
+    // ----------------------------------------------------------------
+    // Filter Tabs
+    // ----------------------------------------------------------------
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const filter = btn.dataset.filter;
+        document.querySelectorAll('.scenario-group').forEach(group => {
+          if (filter === 'all' || group.dataset.cat === filter) {
+            group.style.display = 'flex';
+          } else {
+            group.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // ----------------------------------------------------------------
+    // Chat Send Simulator
+    // ----------------------------------------------------------------
+    document.getElementById('chatSend').addEventListener('click', () => {
+      const input = document.getElementById('chatInput');
+      const text = input.innerText.trim();
+      if (!text) return;
+
+      const messages = document.getElementById('chatMessages');
+      const userMsg = document.createElement('div');
+      userMsg.className = 'chat-msg user-msg';
+      userMsg.innerHTML = `<div class="chat-bubble">${text.substring(0, 160)}${text.length > 160 ? '...' : ''}</div>`;
+      messages.appendChild(userMsg);
+      messages.scrollTop = messages.scrollHeight;
+
+      input.innerText = '';
+
+      setTimeout(() => {
+        const aiMsg = document.createElement('div');
+        aiMsg.className = 'chat-msg ai-msg';
+        aiMsg.innerHTML = `<div class="chat-avatar">AI</div><div class="chat-bubble">SentinelX intercepted this payload at the DOM boundary before network serialization. Check the extension HUD for real-time risk triage.</div>`;
+        messages.appendChild(aiMsg);
+        messages.scrollTop = messages.scrollHeight;
+      }, 600);
+    });
+
+    // ----------------------------------------------------------------
+    // Live Inspection Feed
+    // ----------------------------------------------------------------
+    function computeSimpleEntropy(str) {
+      const freq = {};
+      for (const ch of str) freq[ch] = (freq[ch] || 0) + 1;
+      let H = 0;
+      for (const ch in freq) {
+        const p = freq[ch] / str.length;
+        H -= p * Math.log2(p);
+      }
+      return H;
+    }
+
+    function simulateAnalysis(text) {
+      const body = document.getElementById('analysisBody');
+      if (!text || text.trim().length < 4) {
+        body.innerHTML = '<div class="analysis-placeholder">[STANDBY] Awaiting paste or injection event across simulated targets...</div>';
+        return;
+      }
+
+      const patterns = [
+        { name: 'AWS Access Key',   regex: /\b(AKIA|ASIA)[A-Z0-9]{16}\b/, tag: 'CREDENTIAL' },
+        { name: 'Customer Email',   regex: /[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}/, tag: 'PII' },
+        { name: 'Database URI',     regex: /postgres|mongodb|mysql|redis/i, tag: 'INFRA_SECRET' },
+        { name: 'RSA Private Key',  regex: /BEGIN.+PRIVATE KEY/, tag: 'CRYPTOGRAPHIC' },
+        { name: 'High-Entropy Token', regex: /[A-Za-z0-9!@#$%^&*()\-_+=]{32,}/, tag: 'ENTROPY' },
+        { name: 'Financial Ledger', regex: /revenue|budget|profit|forecast/i, tag: 'FINANCIAL' },
+        { name: 'Proprietary Source', regex: /def |class |import |function |jwt\.encode/, tag: 'SOURCE_CODE' },
+        { name: 'M&A Codename',     regex: /Aurora-X|Helios/i, tag: 'PROPRIETARY_IP' }
+      ];
+
+      const found = patterns.filter(p => p.regex.test(text));
+      const entropy = computeSimpleEntropy(text);
+
+      let html = `
+        <div class="analysis-meta">
+          <span>PAYLOAD SIZE: ${text.length.toLocaleString()} BYTES</span>
+          <span>SHANNON ENTROPY: ${entropy.toFixed(2)} BITS</span>
+          <span>DETECTED PATTERNS: ${found.length}</span>
+        </div>
+      `;
+
+      if (found.length > 0) {
+        html += `<div class="analysis-findings">`;
+        found.forEach(f => {
+          html += `<div class="analysis-finding">
+            <span class="finding-dot"></span>
+            <span class="finding-name">${f.name}</span>
+            <span class="finding-tag">${f.tag}</span>
+          </div>`;
+        });
+        html += `</div>`;
+
+        const risk = Math.min(100, 25 + found.length * 18 + (entropy > 4.2 ? 25 : 0));
+        const action = risk >= 70 ? 'BLOCK' : risk >= 40 ? 'WARN' : 'ALLOW';
+
+        html += `
+          <div class="analysis-risk-bar">
+            <span class="analysis-risk-label">POLICY DECISION: <span style="color:var(--yellow);">${action}</span></span>
+            <div class="analysis-risk-track">
+              <div class="analysis-risk-fill" style="width:${risk}%;"></div>
+            </div>
+            <span class="analysis-risk-num">${risk}/100</span>
+          </div>
+        `;
+      } else {
+        html += `<div class="analysis-safe">[ALLOW] No sensitive heuristic patterns matched. Benign payload.</div>`;
+      }
+
+      body.innerHTML = html;
+    }
+
+    // Monitor paste & input
+    document.addEventListener('paste', (e) => {
+      setTimeout(() => {
+        const text = e.clipboardData ? e.clipboardData.getData('text/plain') : '';
+        if (text) simulateAnalysis(text);
+      }, 60);
+    });
+
+    [document.getElementById('chatInput'),
+     document.getElementById('codeEditor'),
+     document.getElementById('formDescription')].forEach(el => {
+      if (el) el.addEventListener('input', () => {
+        const text = el.value || el.innerText || '';
+        if (text.length > 8) simulateAnalysis(text);
+      });
+    });
+
+    // Detect Extension Presence
+    window.addEventListener('load', () => {
+      const chip = document.getElementById('extensionStatus');
+      setTimeout(() => {
+        if (window.__sentinelx_loaded || document.querySelector('sx-hud')) {
+          chip.innerHTML = '<span class="status-dot"></span> Extension Active';
+          chip.className = 'status-chip';
+        }
+      }, 500);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+version: "3.9"
+
+services:
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: sentinelx_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: sentinelx
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-sentinelx-dev-password}
+      POSTGRES_DB: sentinelx
+    volumes:
+      - sentinelx_pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sentinelx -d sentinelx"]
+      interval: 10s
+      retries: 5
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sentinelx_backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://sentinelx:${POSTGRES_PASSWORD:-sentinelx-dev-password}@postgres:5432/sentinelx
+      JWT_SECRET: ${JWT_SECRET:-sentinelx-change-this-secret-in-production}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-sentinelx-admin-2024}
+      SENTINELX_API_KEY: ${SENTINELX_API_KEY:-sx-dev-api-key-change-in-production}
+      SENTINELX_SIEM_WEBHOOK: ${SENTINELX_SIEM_WEBHOOK:-}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - sentinelx_models:/app/backend/model_artifacts
+
+volumes:
+  sentinelx_pgdata:
+  sentinelx_models:

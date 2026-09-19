@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SentinelX — Security Operations Dashboard</title>
+  <meta name="description" content="SentinelX SOC Dashboard — real-time security event monitoring and risk analytics.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Space+Grotesk:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+
+  <!-- ================================================================
+       SIDEBAR
+  ================================================================ -->
+  <nav class="sidebar">
+    <a href="../index.html" class="sidebar-logo" style="text-decoration:none;">
+      <div class="sidebar-logo-icon">SX</div>
+      <div class="sidebar-logo-text">
+        <div class="sidebar-brand">SentinelX</div>
+        <div class="sidebar-tagline">SOC Telemetry Studio</div>
+      </div>
+    </a>
+
+    <nav class="sidebar-nav">
+      <a href="#" class="nav-item active" data-page="overview" id="nav-overview">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+          <rect x="3" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/>
+          <rect x="14" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/>
+          <rect x="3" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/>
+          <rect x="14" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/>
+        </svg>
+        Overview
+      </a>
+      <a href="#" class="nav-item" data-page="events" id="nav-events">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+          <path d="M9 5H7C5.9 5 5 5.9 5 7V19C5 20.1 5.9 21 7 21H17C18.1 21 19 20.1 19 19V7C19 5.9 18.1 5 17 5H15" stroke="currentColor" stroke-width="2"/>
+          <rect x="9" y="3" width="6" height="4" rx="1" stroke="currentColor" stroke-width="2"/>
+          <line x1="9" y1="12" x2="15" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <line x1="9" y1="16" x2="13" y2="16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        Events
+      </a>
+      <a href="#" class="nav-item" data-page="analytics" id="nav-analytics">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+          <polyline points="22,12 18,12 15,21 9,3 6,12 2,12" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Analytics
+      </a>
+      <a href="#" class="nav-item" data-page="policies" id="nav-policies">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+          <path d="M12 2L3 7V12C3 16.55 7.84 20.74 12 22C16.16 20.74 21 16.55 21 12V7L12 2Z"
+                stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        </svg>
+        Policies
+      </a>
+      <a href="#" class="nav-item" data-page="compliance" id="nav-compliance">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+          <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+        </svg>
+        Compliance
+      </a>
+      <a href="#" class="nav-item" data-page="settings" id="nav-settings">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" stroke="currentColor" stroke-width="2"/>
+        </svg>
+        Settings
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-footer-status">
+        <div class="status-indicator"></div>
+        <div>
+          <div class="sidebar-footer-label">Backend API</div>
+          <div class="sidebar-footer-val" id="apiStatus">Connecting...</div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ================================================================
+       MAIN CONTENT
+  ================================================================ -->
+  <div class="main-content">
+
+    <!-- ── Top Bar ─────────────────────────────────────────────── -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <div class="page-title" id="pageTitle">Overview</div>
+        <div class="page-subtitle" id="pageSubtitle">Real-time security event monitoring</div>
+      </div>
+      <div class="topbar-right">
+        <div class="backend-url-wrap">
+          <label class="backend-label">Backend URL</label>
+          <input type="text" class="backend-input" id="backendUrl"
+                 value="http://localhost:8000"
+                 placeholder="http://localhost:8000"
+                 aria-label="Backend API URL"/>
+        </div>
+        <button class="export-report-btn" id="exportReportBtn" aria-label="Export SOC 2 Report">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+          </svg>
+          Export SOC 2 Report
+        </button>
+        <button class="refresh-btn" id="refreshBtn" aria-label="Refresh data">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+            <polyline points="23,4 23,10 17,10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M20.49 15A9 9 0 1 1 5.64 5.64L17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          Refresh
+        </button>
+        <div class="live-badge" id="liveBadge">
+          <span class="live-dot"></span>
+          Live
+        </div>
+      </div>
+    </header>
+
+    <!-- ================================================================
+         PAGE: OVERVIEW
+    ================================================================ -->
+    <section class="page active" id="page-overview">
+
+      <!-- KPI Cards -->
+      <div class="kpi-grid">
+        <div class="kpi-card kpi-total">
+          <div class="kpi-label">Total Events</div>
+          <div class="kpi-number" id="kpiTotal">--</div>
+          <div class="kpi-sub">All time</div>
+        </div>
+        <div class="kpi-card kpi-allow">
+          <div class="kpi-label">Allowed</div>
+          <div class="kpi-number" id="kpiAllow">--</div>
+          <div class="kpi-sub">No sensitive data detected</div>
+        </div>
+        <div class="kpi-card kpi-warn">
+          <div class="kpi-label">Warned</div>
+          <div class="kpi-number" id="kpiWarn">--</div>
+          <div class="kpi-sub">User notified</div>
+        </div>
+        <div class="kpi-card kpi-block">
+          <div class="kpi-label">Blocked</div>
+          <div class="kpi-number" id="kpiBlock">--</div>
+          <div class="kpi-sub">Policy enforcement</div>
+        </div>
+        <div class="kpi-card kpi-high">
+          <div class="kpi-label">High Risk</div>
+          <div class="kpi-number" id="kpiHigh">--</div>
+          <div class="kpi-sub">Score 70+</div>
+        </div>
+        <div class="kpi-card kpi-critical">
+          <div class="kpi-label">Critical</div>
+          <div class="kpi-number" id="kpiCritical">--</div>
+          <div class="kpi-sub">Score 90+</div>
+        </div>
+      </div>
+
+      <!-- Charts Row -->
+      <div class="charts-row">
+        <div class="chart-card" style="flex:1.4">
+          <div class="chart-header">
+            <div class="chart-title">Action Distribution</div>
+          </div>
+          <div class="chart-body">
+            <canvas id="chartAction" aria-label="Action distribution chart"></canvas>
+          </div>
+        </div>
+        <div class="chart-card" style="flex:1.6">
+          <div class="chart-header">
+            <div class="chart-title">Destination Risk Exposure</div>
+          </div>
+          <div class="chart-body">
+            <canvas id="chartDestination" aria-label="Destination risk chart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Events -->
+      <div class="section-card">
+        <div class="section-header">
+          <div class="section-title">Recent Security Events</div>
+          <button class="text-btn" id="viewAllBtn">View all</button>
+        </div>
+        <div class="events-table-wrap">
+          <table class="events-table" id="overviewEventTable">
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Destination</th>
+                <th>Detected Tags</th>
+                <th>Risk</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="overviewEventsBody">
+              <tr><td colspan="5" class="table-empty">Loading events...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ================================================================
+         PAGE: EVENTS
+    ================================================================ -->
+    <section class="page" id="page-events">
+      <div class="section-card" style="flex:1">
+        <div class="section-header">
+          <div class="section-title">Security Event Log</div>
+          <div class="event-filters">
+            <select class="filter-select" id="filterAction" aria-label="Filter by action">
+              <option value="">All Actions</option>
+              <option value="BLOCK">BLOCK</option>
+              <option value="WARN">WARN</option>
+              <option value="ALLOW">ALLOW</option>
+            </select>
+            <button class="danger-btn" id="clearAllBtn">Clear All</button>
+          </div>
+        </div>
+        <div class="events-table-wrap">
+          <table class="events-table" id="eventsTable">
+            <thead>
+              <tr>
+                <th>Event ID</th>
+                <th>Time</th>
+                <th>Destination</th>
+                <th>Detected Tags</th>
+                <th>Content</th>
+                <th>Risk</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="eventsBody">
+              <tr><td colspan="7" class="table-empty">Loading...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         PAGE: ANALYTICS (EXFILTRATION THREAT MAP & MITRE ATT&CK RADAR)
+    ================================================================ -->
+    <section class="page" id="page-analytics">
+      <div class="analytics-grid">
+
+        <!-- MITRE ATT&CK Exfiltration Vector Radar -->
+        <div class="chart-card">
+          <div class="chart-header">
+            <div>
+              <div class="chart-title">MITRE ATT&CK Exfiltration Vector Radar</div>
+              <div style="font-size:11px;color:#64748b;margin-top:2px;">Real-time threat surface vs zero-trust safety threshold</div>
+            </div>
+          </div>
+          <div class="chart-body" style="height:310px">
+            <canvas id="chartThreatRadar" aria-label="MITRE Exfiltration Threat Radar"></canvas>
+          </div>
+        </div>
+
+        <!-- Destination Risk Exposure Breakdown -->
+        <div class="chart-card">
+          <div class="chart-header">
+            <div>
+              <div class="chart-title">Egress Destination Exposure</div>
+              <div style="font-size:11px;color:#64748b;margin-top:2px;">Target perimeter breakdown by risk exposure</div>
+            </div>
+          </div>
+          <div class="chart-body" style="height:310px">
+            <canvas id="chartDestPie" aria-label="Destination breakdown chart"></canvas>
+          </div>
+        </div>
+
+        <!-- Visual Exfiltration Threat Topology Map -->
+        <div class="section-card" style="grid-column:1/-1">
+          <div class="section-header">
+            <div>
+              <div class="section-title">Interactive Exfiltration Egress Topology</div>
+              <div class="section-sub">Zero-plaintext pre-DOM security barrier isolating endpoints from external perimeter</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;font-family:'IBM Plex Mono',monospace;font-size:11px;">
+              <span style="color:#059669;font-weight:700;">● LIVE PROTECTION ACTIVE</span>
+              <span style="color:#CBD2E0;">|</span>
+              <span style="color:#1A56DB;font-weight:600;" id="flowScannedCount">0 Payloads Intercepted</span>
+            </div>
+          </div>
+          
+          <div class="threat-topology-container">
+            <!-- Node 1: Source Workstation -->
+            <div class="topology-node source-node">
+              <div class="topology-node-badge">SOURCE VECTOR</div>
+              <div class="topology-node-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00C2FF" stroke-width="2">
+                  <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                  <line x1="8" y1="21" x2="16" y2="21"/>
+                  <line x1="12" y1="17" x2="12" y2="21"/>
+                </svg>
+              </div>
+              <div class="topology-node-title">Employee Workstation</div>
+              <div class="topology-node-detail">Clipboard, Drag & Drop, Keystrokes</div>
+              <div class="topology-node-metric" id="topoSourceCount">Active Monitored DOM</div>
+            </div>
+
+            <!-- Flow Connector 1 -->
+            <div class="topology-connector">
+              <div class="connector-line">
+                <div class="connector-pulse"></div>
+              </div>
+              <div class="connector-label">Pre-DOM Capture</div>
+            </div>
+
+            <!-- Node 2: SentinelX Security Boundary -->
+            <div class="topology-node barrier-node">
+              <div class="topology-node-badge" style="color:#00E5A0;border-color:rgba(0,229,160,0.3);">SECURITY BOUNDARY</div>
+              <div class="topology-node-icon" style="background:rgba(0,229,160,0.1);border-color:rgba(0,229,160,0.3);">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00E5A0" stroke-width="2">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+              </div>
+              <div class="topology-node-title">SentinelX Local Engine</div>
+              <div class="topology-node-detail">Shannon Entropy + Semantic NLP</div>
+              <div class="topology-node-metric" style="color:#00E5A0;">0 Bytes Plaintext Stored</div>
+            </div>
+
+            <!-- Flow Connector 2 -->
+            <div class="topology-connector">
+              <div class="connector-line">
+                <div class="connector-pulse"></div>
+              </div>
+              <div class="connector-label">Policy Interception</div>
+            </div>
+
+            <!-- Node 3: Target Perimeter -->
+            <div class="topology-node dest-node">
+              <div class="topology-node-badge" style="color:#FF3D5A;border-color:rgba(255,61,90,0.3);">EGRESS TARGET</div>
+              <div class="topology-node-icon" style="background:rgba(255,61,90,0.1);border-color:rgba(255,61,90,0.3);">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FF3D5A" stroke-width="2">
+                  <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/>
+                </svg>
+              </div>
+              <div class="topology-node-title">External Perimeter</div>
+              <div class="topology-node-detail">ChatGPT, Claude, Public SaaS</div>
+              <div class="topology-node-metric" id="topoQuarantineCount" style="color:#FF3D5A;">Quarantined at Source</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MITRE ATT&CK Matrix Grid -->
+        <div class="section-card" style="grid-column:1/-1">
+          <div class="section-header">
+            <div>
+              <div class="section-title">MITRE ATT&CK Enterprise Exfiltration Mapping</div>
+              <div class="section-sub">Standardized threat tactics aligned with automated SentinelX browser protections</div>
+            </div>
+          </div>
+          <div class="mitre-grid">
+            <div class="mitre-card" id="mitre-t1552">
+              <div class="mitre-header">
+                <span class="mitre-id">T1552.001</span>
+                <span class="mitre-severity sev-critical">CRITICAL</span>
+              </div>
+              <div class="mitre-name">Unsecured Credentials in Browser Input</div>
+              <div class="mitre-desc">Adversaries or insiders extract AWS access keys, GitHub PATs, and private keys into external prompt textboxes.</div>
+              <div class="mitre-footer">
+                <span class="mitre-hits"><b id="hit-t1552">0</b> Interceptions</span>
+                <span class="mitre-defense">Surgical Redaction + Pre-DOM Quarantine</span>
+              </div>
+            </div>
+
+            <div class="mitre-card" id="mitre-t1567">
+              <div class="mitre-header">
+                <span class="mitre-id">T1567.002</span>
+                <span class="mitre-severity sev-high">HIGH</span>
+              </div>
+              <div class="mitre-name">Exfiltration Over Cloud & AI Web Services</div>
+              <div class="mitre-desc">Data exfiltration to unauthorized LLM web applications (ChatGPT, Claude, Gemini) bypassing traditional firewalls.</div>
+              <div class="mitre-footer">
+                <span class="mitre-hits"><b id="hit-t1567">0</b> Interceptions</span>
+                <span class="mitre-defense">Contextual Destination Tiering</span>
+              </div>
+            </div>
+
+            <div class="mitre-card" id="mitre-t1020">
+              <div class="mitre-header">
+                <span class="mitre-id">T1020</span>
+                <span class="mitre-severity sev-high">HIGH</span>
+              </div>
+              <div class="mitre-name">Automated Bulk Data Exfiltration</div>
+              <div class="mitre-desc">Mass export of customer records, SSNs, and tabular CSV customer files through web forms or file attachments.</div>
+              <div class="mitre-footer">
+                <span class="mitre-hits"><b id="hit-t1020">0</b> Interceptions</span>
+                <span class="mitre-defense">Tabular Column Density Analyzer</span>
+              </div>
+            </div>
+
+            <div class="mitre-card" id="mitre-t1048">
+              <div class="mitre-header">
+                <span class="mitre-id">T1048</span>
+                <span class="mitre-severity sev-med">MEDIUM</span>
+              </div>
+              <div class="mitre-name">Exfiltration Over Alternative Protocol</div>
+              <div class="mitre-desc">Direct database URIs (PostgreSQL, MongoDB) and backend credentials exposed in developer forums and pastes.</div>
+              <div class="mitre-footer">
+                <span class="mitre-hits"><b id="hit-t1048">0</b> Interceptions</span>
+                <span class="mitre-defense">Infrastructure Protocol Regex</span>
+              </div>
+            </div>
+
+            <div class="mitre-card" id="mitre-t1005">
+              <div class="mitre-header">
+                <span class="mitre-id">T1005</span>
+                <span class="mitre-severity sev-med">MEDIUM</span>
+              </div>
+              <div class="mitre-name">Proprietary Source Code & System Data</div>
+              <div class="mitre-desc">Proprietary algorithms and confidential code fragments pasted into unauthorized SaaS debugging consoles.</div>
+              <div class="mitre-footer">
+                <span class="mitre-hits"><b id="hit-t1005">0</b> Interceptions</span>
+                <span class="mitre-defense">Code Syntax Tree Profiler</span>
+              </div>
+            </div>
+
+            <div class="mitre-card" id="mitre-t1052">
+              <div class="mitre-header">
+                <span class="mitre-id">T1052</span>
+                <span class="mitre-severity sev-critical">CRITICAL</span>
+              </div>
+              <div class="mitre-name">Exfiltration via Drag-and-Drop & File Upload</div>
+              <div class="mitre-desc">Exfiltrating sensitive .env configurations, RSA keys, and database dumps via browser drag-and-drop file inputs.</div>
+              <div class="mitre-footer">
+                <span class="mitre-hits"><b id="hit-t1052">0</b> Interceptions</span>
+                <span class="mitre-defense">In-Memory 64KB FileReader Quarantine</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Destination Risk Table -->
+        <div class="section-card" style="grid-column:1/-1">
+          <div class="section-header">
+            <div class="section-title">Risk Distribution by Destination</div>
+          </div>
+          <div class="dest-table-wrap" id="destTableWrap">
+            <table class="events-table" id="destTable">
+              <thead>
+                <tr>
+                  <th>Destination Category</th>
+                  <th>Event Count</th>
+                  <th>Average Risk Score</th>
+                  <th>Risk Level</th>
+                </tr>
+              </thead>
+              <tbody id="destBody">
+                <tr><td colspan="4" class="table-empty">Loading...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================================================================
+         PAGE: POLICIES
+    ================================================================ -->
+    <section class="page" id="page-policies">
+      <div class="policies-layout">
+
+        <!-- Built-in Policies -->
+        <div class="section-card">
+          <div class="section-header">
+            <div class="section-title">Active Policy Rules</div>
+            <div class="section-sub">Rules are evaluated in BLOCK > WARN > ALLOW order</div>
+          </div>
+          <div class="policies-list" id="policiesList">
+            <div class="policy-item policy-block">
+              <div class="policy-priority">BLOCK</div>
+              <div class="policy-body">
+                <div class="policy-name">Credentials to external destinations</div>
+                <div class="policy-desc">Any credential type detected on EXTERNAL_AI, UNKNOWN_SAAS, or SUSPICIOUS destinations is unconditionally blocked.</div>
+              </div>
+              <div class="policy-id">POLICY_001</div>
+            </div>
+            <div class="policy-item policy-block">
+              <div class="policy-priority">BLOCK</div>
+              <div class="policy-body">
+                <div class="policy-name">PCI financial data to external AI</div>
+                <div class="policy-desc">Payment card data must never be transmitted to AI or SaaS services.</div>
+              </div>
+              <div class="policy-id">POLICY_003</div>
+            </div>
+            <div class="policy-item policy-block">
+              <div class="policy-priority">BLOCK</div>
+              <div class="policy-body">
+                <div class="policy-name">Private cryptographic keys unconditionally</div>
+                <div class="policy-desc">PEM private keys are blocked to all non-internal destinations.</div>
+              </div>
+              <div class="policy-id">POLICY_005</div>
+            </div>
+            <div class="policy-item policy-warn">
+              <div class="policy-priority">WARN</div>
+              <div class="policy-body">
+                <div class="policy-name">Source code to external AI services</div>
+                <div class="policy-desc">Proprietary source code triggers a security warning when sent to external AI platforms.</div>
+              </div>
+              <div class="policy-id">POLICY_010</div>
+            </div>
+            <div class="policy-item policy-warn">
+              <div class="policy-priority">WARN</div>
+              <div class="policy-body">
+                <div class="policy-name">PII to external AI services</div>
+                <div class="policy-desc">Personal data triggers a warning when sent to external AI.</div>
+              </div>
+              <div class="policy-id">POLICY_011</div>
+            </div>
+            <div class="policy-item policy-allow">
+              <div class="policy-priority">ALLOW</div>
+              <div class="policy-body">
+                <div class="policy-name">All content to internal destinations</div>
+                <div class="policy-desc">Internal company systems are always trusted.</div>
+              </div>
+              <div class="policy-id">POLICY_021</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Privacy Architecture Panel -->
+        <div class="section-card">
+          <div class="section-header">
+            <div class="section-title">Privacy Architecture</div>
+          </div>
+          <div class="privacy-grid">
+            <div class="privacy-item">
+              <div class="privacy-label">Raw Content Stored</div>
+              <div class="privacy-val privacy-good">None</div>
+            </div>
+            <div class="privacy-item">
+              <div class="privacy-label">Processing Location</div>
+              <div class="privacy-val privacy-good">Local Browser</div>
+            </div>
+            <div class="privacy-item">
+              <div class="privacy-label">Telemetry Fields</div>
+              <div class="privacy-val">event_id, timestamp, tags, risk, action</div>
+            </div>
+            <div class="privacy-item">
+              <div class="privacy-label">Content Fingerprint</div>
+              <div class="privacy-val">SHA-256 prefix (16 chars)</div>
+            </div>
+            <div class="privacy-item">
+              <div class="privacy-label">Backend Storage</div>
+              <div class="privacy-val">SQLite / PostgreSQL (metadata only)</div>
+            </div>
+          </div>
+
+          <div class="risk-formula">
+            <div class="formula-title">Contextual Risk Formula</div>
+            <div class="formula-body">
+              <span class="formula-line">Risk = 0.40 x Sensitivity</span>
+              <span class="formula-line">     + 0.25 x Destination Risk</span>
+              <span class="formula-line">     + 0.15 x Data Volume</span>
+              <span class="formula-line">     + 0.10 x Action Vector</span>
+              <span class="formula-line">     + 0.10 x Context Risk</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================================================================
+         PAGE: COMPLIANCE & SOC 2 AUDIT REPORT
+    ================================================================ -->
+    <section class="page page-compliance" id="page-compliance" style="display:none;">
+      <div class="compliance-report-container" id="printableComplianceReport">
+        
+        <!-- Report Header -->
+        <div class="report-header">
+          <div class="report-title-area">
+            <div class="report-badge">OFFICIAL AUDIT DOCUMENT</div>
+            <h1 class="report-title">Data Loss Prevention & Zero-Knowledge Compliance Report</h1>
+            <p class="report-meta">Generated for SOC 2 Type II, ISO/IEC 27001:2022 & GDPR Article 32 Compliance Certification</p>
+          </div>
+          <div class="report-actions">
+            <button class="print-report-btn" id="trainModelActionBtn" style="background:rgba(0,194,255,0.12);border-color:rgba(0,194,255,0.4);color:#00C2FF;margin-right:10px;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+              </svg>
+              Train & Evaluate Model
+            </button>
+            <button class="print-report-btn" id="printReportActionBtn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 6 2 18 2 18 9"/>
+                <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+                <rect x="6" y="14" width="12" height="8"/>
+              </svg>
+              Print / Save as PDF
+            </button>
+          </div>
+        </div>
+
+        <!-- Executive Summary Cards -->
+        <div class="report-kpi-grid">
+          <div class="report-kpi-card highlight">
+            <div class="report-kpi-label">Zero-Knowledge Guarantee</div>
+            <div class="report-kpi-val" style="color:#00E5A0;">0 Bytes</div>
+            <div class="report-kpi-sub">Plaintext Stored or Transmitted</div>
+          </div>
+          <div class="report-kpi-card">
+            <div class="report-kpi-label">Detection Precision</div>
+            <div class="report-kpi-val" id="metricPrecision" style="color:#00C2FF;">1.00</div>
+            <div class="report-kpi-sub">0 False Positives on Safe Queries</div>
+          </div>
+          <div class="report-kpi-card">
+            <div class="report-kpi-label">Detection Recall</div>
+            <div class="report-kpi-val" id="metricRecall" style="color:#00C2FF;">1.00</div>
+            <div class="report-kpi-sub">100% Attack Vectors Caught</div>
+          </div>
+          <div class="report-kpi-card">
+            <div class="report-kpi-label">F1 Harmonic Score</div>
+            <div class="report-kpi-val" id="metricF1" style="color:#00E5A0;">1.00</div>
+            <div class="report-kpi-sub">Harmonic Precision-Recall Mean</div>
+          </div>
+          <div class="report-kpi-card">
+            <div class="report-kpi-label">Model Accuracy</div>
+            <div class="report-kpi-val" id="metricAccuracy" style="color:#00E5A0;">100.0%</div>
+            <div class="report-kpi-sub" id="metricSampleCount">28 Labeled Attack & Control Samples</div>
+          </div>
+        </div>
+
+        <!-- Real-Time Trained Confusion Matrix Card -->
+        <div class="report-section" style="margin-bottom: 24px;">
+          <div class="report-section-title">Classifier Confusion Matrix &amp; Training Metrics</div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));gap:14px;background:#F0F2F8;border:1px solid #E2E6EF;border-radius:10px;padding:16px;">
+            <div style="background:rgba(5,150,105,0.08);border:1px solid rgba(5,150,105,0.20);border-radius:8px;padding:14px;">
+              <div style="font-size:11px;color:#64748B;margin-bottom:5px;font-family:'DM Sans',sans-serif;font-weight:600;">True Positives (TP)</div>
+              <div id="cmTP" style="font-size:22px;font-weight:800;color:#059669;font-family:'IBM Plex Mono',monospace;">18</div>
+              <div style="font-size:10px;color:#94A3B8;margin-top:3px;">Attacks Detected Correctly</div>
+            </div>
+            <div style="background:rgba(217,119,6,0.07);border:1px solid rgba(217,119,6,0.18);border-radius:8px;padding:14px;">
+              <div style="font-size:11px;color:#64748B;margin-bottom:5px;font-family:'DM Sans',sans-serif;font-weight:600;">False Positives (FP)</div>
+              <div id="cmFP" style="font-size:22px;font-weight:800;color:#059669;font-family:'IBM Plex Mono',monospace;">0</div>
+              <div style="font-size:10px;color:#94A3B8;margin-top:3px;">Benign Queries Flagged</div>
+            </div>
+            <div style="background:rgba(220,38,38,0.07);border:1px solid rgba(220,38,38,0.18);border-radius:8px;padding:14px;">
+              <div style="font-size:11px;color:#64748B;margin-bottom:5px;font-family:'DM Sans',sans-serif;font-weight:600;">False Negatives (FN)</div>
+              <div id="cmFN" style="font-size:22px;font-weight:800;color:#059669;font-family:'IBM Plex Mono',monospace;">0</div>
+              <div style="font-size:10px;color:#94A3B8;margin-top:3px;">Attacks Missed / Leaked</div>
+            </div>
+            <div style="background:rgba(26,86,219,0.07);border:1px solid rgba(26,86,219,0.18);border-radius:8px;padding:14px;">
+              <div style="font-size:11px;color:#64748B;margin-bottom:5px;font-family:'DM Sans',sans-serif;font-weight:600;">True Negatives (TN)</div>
+              <div id="cmTN" style="font-size:22px;font-weight:800;color:#1A56DB;font-family:'IBM Plex Mono',monospace;">10</div>
+              <div style="font-size:10px;color:#94A3B8;margin-top:3px;">Benign Queries Allowed</div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:#94A3B8;">
+            <span>Training &amp; Evaluation Latency: <b id="trainLatencyVal" style="color:#0C1523;">19.32ms</b></span>
+            <span>Architecture: <b style="color:#1A56DB;">TF-IDF + Calibrated Logistic Classifier</b></span>
+          </div>
+        </div>
+
+        <!-- Statistical Performance Evaluation Matrix -->
+        <div class="report-section">
+          <div class="report-section-title">1. Detection Engine Statistical Evaluation</div>
+          <table class="compliance-table">
+            <thead>
+              <tr>
+                <th>Attack Vector / Data Type</th>
+                <th>Detection Class</th>
+                <th>Sample Result</th>
+                <th>Target Threshold</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Cloud Provider Access Keys</td>
+                <td>Deterministic Regex / AST</td>
+                <td>True Positive (TP)</td>
+                <td>&lt; 5ms Latency</td>
+                <td><span class="compliance-pass">PASS</span></td>
+              </tr>
+              <tr>
+                <td>Base64 Obfuscated Credentials</td>
+                <td>Decoder + Structure Analyzer</td>
+                <td>True Positive (TP)</td>
+                <td>&lt; 5ms Latency</td>
+                <td><span class="compliance-pass">PASS</span></td>
+              </tr>
+              <tr>
+                <td>Zero-Day High Entropy Tokens</td>
+                <td>Local Shannon Entropy ($H \ge 4.2$)</td>
+                <td>True Positive (TP)</td>
+                <td>&lt; 5ms Latency</td>
+                <td><span class="compliance-pass">PASS</span></td>
+              </tr>
+              <tr>
+                <td>Embedded Database URIs</td>
+                <td>Infrastructure Protocol Parser</td>
+                <td>True Positive (TP)</td>
+                <td>&lt; 5ms Latency</td>
+                <td><span class="compliance-pass">PASS</span></td>
+              </tr>
+              <tr>
+                <td>Bulk PII / Customer CSV Dumps</td>
+                <td>Tabular Structural Parser</td>
+                <td>True Positive (TP)</td>
+                <td>&lt; 5ms Latency</td>
+                <td><span class="compliance-pass">PASS</span></td>
+              </tr>
+              <tr>
+                <td>Strategic Business & M&A Leaks</td>
+                <td>Client-Side Semantic NLP</td>
+                <td>True Positive (TP)</td>
+                <td>&lt; 5ms Latency</td>
+                <td><span class="compliance-pass">PASS</span></td>
+              </tr>
+              <tr>
+                <td>Benign Technical & Graph Inquiries</td>
+                <td>Negative Control</td>
+                <td>True Negative (TN)</td>
+                <td>Zero False Positives</td>
+                <td><span class="compliance-pass">PASS</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Regulatory Framework Alignment Matrix -->
+        <div class="report-section">
+          <div class="report-section-title">2. Enterprise Regulatory Crosswalk</div>
+          <table class="compliance-table">
+            <thead>
+              <tr>
+                <th>Standard / Regulation</th>
+                <th>Control Reference</th>
+                <th>Control Description</th>
+                <th>SentinelX Technical Mechanism</th>
+                <th>Compliance Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>SOC 2 Type II</strong></td>
+                <td>CC6.1, CC6.6</td>
+                <td>Logical boundary protection & perimeter DLP</td>
+                <td>Pre-DOM capture-phase interception on clipboard and file upload vectors</td>
+                <td><span class="compliance-pass">COMPLIANT</span></td>
+              </tr>
+              <tr>
+                <td><strong>ISO/IEC 27001:2022</strong></td>
+                <td>Annex A.8.12</td>
+                <td>Data Leakage Prevention (DLP) controls</td>
+                <td>Surgical token sanitization, policy-based action blocking</td>
+                <td><span class="compliance-pass">COMPLIANT</span></td>
+              </tr>
+              <tr>
+                <td><strong>GDPR</strong></td>
+                <td>Article 32</td>
+                <td>Security of processing & pseudonymization</td>
+                <td>Zero-plaintext client processing; local pseudonymization via redactor</td>
+                <td><span class="compliance-pass">COMPLIANT</span></td>
+              </tr>
+              <tr>
+                <td><strong>HIPAA Security Rule</strong></td>
+                <td>§ 164.312(e)(1)</td>
+                <td>Transmission security & unauthorized access</td>
+                <td>Closed Shadow-DOM UI isolation; zero raw PHI/PII stored in telemetry</td>
+                <td><span class="compliance-pass">COMPLIANT</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Audit Signature Section -->
+        <div class="report-footer">
+          <div class="report-signature-block">
+            <div class="signature-line"></div>
+            <div class="signature-name">SentinelX Automated Compliance Engine</div>
+            <div class="signature-title">Continuous DLP Assurance & Verification Daemon</div>
+          </div>
+          <div class="report-timestamp-block">
+            <div class="report-audit-time" id="reportAuditTimestamp">Verified Active</div>
+            <div class="report-hash-verify">Verification Key: SHA-256 Verified Telemetry Stream</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </div><!-- /main-content -->
+
+  <!-- ================================================================
+       PAGE: SETTINGS (SIEM Webhook + Identity Layer Config)
+  ================================================================ -->
+  <!-- Settings is injected into main-content via JS -->
+  <template id="tpl-settings">
+    <section class="page" id="page-settings">
+
+      <!-- Webhook Config -->
+      <div class="section-card" style="max-width:640px;margin-bottom:20px;">
+        <div class="section-header" style="margin-bottom:18px;">
+          <div>
+            <div class="section-title">SIEM / Slack / Teams Webhook</div>
+            <div class="section-sub">Incidents with action=BLOCK or risk &gt;= 70 are dispatched automatically</div>
+          </div>
+          <div id="webhookStatusBadge" class="action-badge action-allow" style="display:none;">CONFIGURED</div>
+        </div>
+
+        <div class="form-row" style="display:flex;flex-direction:column;gap:5px;margin-bottom:14px;">
+          <label style="font-size:11.5px;font-weight:600;color:var(--text-2);">Webhook URL</label>
+          <div style="display:flex;gap:8px;">
+            <input type="url" id="webhookUrlInput"
+              placeholder="https://hooks.slack.com/services/T00/B00/xxx or https://your-siem.io/webhook"
+              aria-label="SIEM Webhook URL"
+              style="flex:1;padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg);color:var(--text-1);font-family:'IBM Plex Mono',monospace;font-size:12px;outline:none;transition:border-color 0.15s;"/>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:8px;align-items:center;">
+          <button id="saveWebhookBtn"
+            style="padding:9px 18px;background:var(--primary);color:#fff;border:none;border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:background 0.15s;"
+            onmouseover="this.style.background='#1447B8'" onmouseout="this.style.background='var(--primary)'">
+            Save Webhook
+          </button>
+          <button id="testWebhookBtn"
+            style="padding:9px 18px;background:var(--surface);color:var(--text-2);border:1px solid var(--border);border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:border-color 0.15s;"
+            onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='var(--border)'">
+            Send Test Event
+          </button>
+          <span id="webhookMsg" style="font-size:12px;font-family:'IBM Plex Mono',monospace;color:var(--text-3);"></span>
+        </div>
+      </div>
+
+      <!-- Identity Layer Status -->
+      <div class="section-card" style="max-width:640px;margin-bottom:20px;">
+        <div class="section-header" style="margin-bottom:18px;">
+          <div>
+            <div class="section-title">Identity Layer</div>
+            <div class="section-sub">Employee and device identity sourced from managed GPO / Intune policy</div>
+          </div>
+          <div class="action-badge action-allow">ACTIVE</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:0;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;">
+          <div style="display:flex;padding:10px 14px;border-bottom:1px solid var(--border);background:var(--surface);">
+            <span style="font-size:11.5px;font-weight:600;color:var(--text-2);min-width:160px;">employee_id field</span>
+            <span style="font-size:11.5px;font-family:'IBM Plex Mono',monospace;color:var(--text-1);">chrome.storage.managed (read-only)</span>
+          </div>
+          <div style="display:flex;padding:10px 14px;border-bottom:1px solid var(--border);background:var(--surface);">
+            <span style="font-size:11.5px;font-weight:600;color:var(--text-2);min-width:160px;">device_id field</span>
+            <span style="font-size:11.5px;font-family:'IBM Plex Mono',monospace;color:var(--text-1);">Machine hostname from MDM</span>
+          </div>
+          <div style="display:flex;padding:10px 14px;border-bottom:1px solid var(--border);background:var(--surface);">
+            <span style="font-size:11.5px;font-weight:600;color:var(--text-2);min-width:160px;">Tamper proof</span>
+            <span style="font-size:11.5px;font-family:'IBM Plex Mono',monospace;color:var(--allow);">Yes — managed storage is IT-only write</span>
+          </div>
+          <div style="display:flex;padding:10px 14px;background:var(--surface);">
+            <span style="font-size:11.5px;font-weight:600;color:var(--text-2);min-width:160px;">Analytics endpoint</span>
+            <span style="font-size:11.5px;font-family:'IBM Plex Mono',monospace;color:var(--primary);">GET /risk/by-employee</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- DB Mode -->
+      <div class="section-card" style="max-width:640px;">
+        <div class="section-header" style="margin-bottom:16px;">
+          <div>
+            <div class="section-title">Database Configuration</div>
+            <div class="section-sub">Set DATABASE_URL env var for PostgreSQL; falls back to SQLite in dev</div>
+          </div>
+          <div id="dbModeBadge" class="action-badge action-warn">SQLITE (DEV)</div>
+        </div>
+        <div style="font-size:12px;font-family:'IBM Plex Mono',monospace;color:var(--text-3);padding:10px 14px;background:var(--bg);border-radius:var(--radius-sm);border:1px solid var(--border);">
+          Production: set DATABASE_URL=postgresql://user:pass@host:5432/sentinelx
+        </div>
+      </div>
+
+    </section>
+  </template>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>

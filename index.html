@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SentinelX — Client-Side Browser Security & Contextual DLP</title>
+  <meta name="description" content="SentinelX: Enterprise real-time browser security & contextual data loss prevention. Zero plaintext egress.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Space+Grotesk:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="landing.css">
+</head>
+<body>
+
+  <!-- Main Canvas Wrapper (Framed Bento Grid from Dribbble Reference) -->
+  <div class="bento-frame">
+    <div class="bento-container">
+
+      <!-- ==============================================================
+           TOP ROW: HERO CARD (LEFT) + VIDEO SHOWCASE CARD (RIGHT)
+      ============================================================== -->
+      <div class="bento-top-row">
+
+        <!-- ── HERO CARD (Warm Sand / Editorial) ────────────────── -->
+        <div class="bento-card card-hero">
+          
+          <!-- Inner Navbar -->
+          <nav class="hero-nav">
+            <div class="brand">
+              <div class="brand-glyph">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 2L3 7V12C3 16.55 7.84 20.74 12 22C16.16 20.74 21 16.55 21 12V7L12 2Z"
+                        fill="#1a1815"/>
+                  <path d="M9 12L11 14L15 10" stroke="#f0e4d2" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <span class="brand-name">sentinelx</span>
+            </div>
+
+            <div class="nav-links">
+              <a href="#home" class="nav-item active">HOME</a>
+              <a href="test-harness/index.html" class="nav-item">WORKBENCH</a>
+              <a href="dashboard/index.html" class="nav-item">TELEMETRY</a>
+              <a href="docs/MASTER_SPECIFICATION.md" class="nav-item">DOCS</a>
+            </div>
+
+            <a href="test-harness/index.html" class="nav-cta-btn">LAUNCH WORKBENCH</a>
+          </nav>
+
+          <!-- Hero Headline (Syne bold uppercase font) -->
+          <div class="hero-body">
+            <h1 class="hero-title">
+              I THINK YOUR ENTERPRISE NEEDS BROWSER DLP SOLUTION...
+            </h1>
+
+            <div class="hero-actions">
+              <a href="test-harness/index.html" class="action-btn-primary">TEST THE RUNTIME</a>
+              <a href="dashboard/index.html" class="action-btn-secondary">SOC CONSOLE</a>
+            </div>
+
+            <!-- Overlapping Decorative Module Cards (From Dribbble shot) -->
+            <div class="hero-visual-strip">
+              <div class="floating-badge-pill">
+                <span class="pill-dot"></span>
+                ACTIVE MONITORING
+              </div>
+
+              <div class="mini-preview-card card-yellow">
+                <div class="mini-card-tag">DLP ENGINE</div>
+                <div class="mini-card-title">Shannon Entropy & Regex Heuristics</div>
+              </div>
+
+              <div class="mini-preview-card card-cyan">
+                <div class="mini-card-tag">CLIENT EVAL</div>
+                <div class="mini-card-val">0 BYTES</div>
+                <div class="mini-card-sub">Plaintext to Backend</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── SHOWCASE CARD WITH MAIN VIDEO (Sage Green) ───────── -->
+        <div class="bento-card card-showcase">
+          <div class="showcase-header">
+            <div class="abstract-shapes">
+              <div class="shape-arch"></div>
+              <div class="shape-half-circle"></div>
+            </div>
+            <h2 class="showcase-title">
+              FULL-SPECTRUM CLIENT INTERCEPTION
+            </h2>
+          </div>
+
+          <!-- The Main Home Page Video -->
+          <div class="video-container">
+            <video class="hero-video" autoplay loop muted playsinline controls>
+              <source src="SentinelX_Full_Technical_Title.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <div class="video-caption-bar">
+              <span class="video-dot"></span>
+              <span>LIVE DEMO: SENTINELX REAL-TIME DLP ENGINE</span>
+            </div>
+          </div>
+
+          <!-- Feature Bullets (From Dribbble reference) -->
+          <div class="showcase-features">
+            <div class="feature-item">
+              <div class="feature-bullet bullet-purple"></div>
+              <div class="feature-text">
+                <span class="feature-name">Deep Inception</span>
+                <span class="feature-desc">Hooks keystroke and paste events at the browser DOM boundary.</span>
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-bullet bullet-sand"></div>
+              <div class="feature-text">
+                <span class="feature-name">Contextual Risk</span>
+                <span class="feature-desc">Evaluates Shannon entropy, regex patterns, and egress destination.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ==============================================================
+           BOTTOM ROW: BENTO METRICS & ARCH CARDS
+      ============================================================== -->
+      <div class="bento-bottom-row">
+
+        <!-- Card 1: Dark Slate Strategy -->
+        <div class="bento-card card-dark">
+          <div class="card-dark-body">
+            <h3 class="card-dark-title">
+              CLIENT-SIDE PATTERN ANALYSIS, ENTROPY, & PRIVACY AUDIT
+            </h3>
+            <div class="cyan-badge-module">
+              <div class="cyan-badge-circle"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: Terracotta Stat Card (20+ Patterns) -->
+        <div class="bento-card card-terracotta">
+          <div class="stat-circle-wrap">
+            <div class="stat-circle">
+              <span class="stat-num">20+</span>
+            </div>
+            <span class="stat-label">Detection Patterns</span>
+          </div>
+        </div>
+
+        <!-- Card 3: Graphic Arch Module with Security Console Photo -->
+        <div class="bento-card card-arch-media">
+          <div class="arch-frame">
+            <img src="test-harness/bg-sentinel.jpg" alt="Security Command Operations" class="arch-img">
+          </div>
+          <div class="arch-frame arch-reverse">
+            <div class="arch-solid"></div>
+          </div>
+        </div>
+
+        <!-- Card 4: Sage Green Latency Stat (<5ms) -->
+        <div class="bento-card card-sage">
+          <div class="stat-circle-wrap">
+            <div class="stat-circle circle-white">
+              <span class="stat-num">&lt;5ms</span>
+            </div>
+            <span class="stat-label">Target Latency</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>

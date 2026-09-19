@@ -1,0 +1,23 @@
+Windows Registry Editor Version 5.00
+
+; ====================================================================
+; SentinelX Enterprise Deployment Policy (GPO / Active Directory)
+; Deploy to: HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Google\Chrome\3rdparty\extensions\<extension-id>\policy
+; Or Microsoft Edge: HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Edge\3rdparty\extensions\<extension-id>\policy
+; ====================================================================
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Google\Chrome\3rdparty\extensions\sentinelx_dlp_enterprise\policy]
+"telemetryBackendUrl"="http://localhost:8000"
+"enforceStrictDLP"=dword:00000001
+"auditModeOnly"=dword:00000000
+"shannonEntropyThreshold"="4.2"
+"quarantineBlockedFiles"=dword:00000001
+"telemetrySampleRate"=dword:00000064
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Edge\3rdparty\extensions\sentinelx_dlp_enterprise\policy]
+"telemetryBackendUrl"="http://localhost:8000"
+"enforceStrictDLP"=dword:00000001
+"auditModeOnly"=dword:00000000
+"shannonEntropyThreshold"="4.2"
+"quarantineBlockedFiles"=dword:00000001
+"telemetrySampleRate"=dword:00000064

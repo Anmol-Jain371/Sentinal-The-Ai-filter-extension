@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SentinelX — Engineering Specification & Architecture</title>
+  <meta name="description" content="SentinelX Engineering Specification: Shannon entropy heuristics, closed shadow DOM isolation, zero-knowledge telemetry.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Space+Grotesk:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../landing.css">
+  <style>
+    .docs-wrapper {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .doc-section {
+      background: var(--sand-hero);
+      color: var(--sand-dark);
+      border-radius: var(--radius-card);
+      padding: 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .doc-header-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--terracotta);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .doc-main-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 38px;
+      font-weight: 800;
+      line-height: 1.15;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+    }
+    .doc-lead {
+      font-size: 15px;
+      line-height: 1.6;
+      max-width: 860px;
+      opacity: 0.9;
+    }
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-top: 10px;
+    }
+    .pillar-card {
+      background: #ffffff;
+      border-radius: var(--radius-inner);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    }
+    .pillar-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--terracotta);
+    }
+    .pillar-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--sand-dark);
+      text-transform: uppercase;
+    }
+    .pillar-desc {
+      font-size: 12px;
+      color: #555555;
+      line-height: 1.5;
+    }
+    .code-callout {
+      background: var(--dark-module);
+      color: #ffffff;
+      border-radius: var(--radius-inner);
+      padding: 20px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      line-height: 1.6;
+      overflow-x: auto;
+    }
+    .math-pill {
+      background: var(--yellow-accent);
+      color: var(--sand-dark);
+      padding: 10px 18px;
+      border-radius: var(--radius-pill);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 700;
+      align-self: flex-start;
+      margin: 8px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bento-frame">
+    <div class="docs-wrapper">
+
+      <!-- Header Navbar (Matching Home & Workbench) -->
+      <nav class="bento-card hero-nav" style="background: var(--sand-hero); padding: 18px 32px;">
+        <div class="brand">
+          <div class="brand-glyph">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2L3 7V12C3 16.55 7.84 20.74 12 22C16.16 20.74 21 16.55 21 12V7L12 2Z" fill="#1a1815"/>
+              <path d="M9 12L11 14L15 10" stroke="#f0e4d2" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <a href="../index.html" class="brand-name" style="text-decoration:none;">sentinelx</a>
+        </div>
+
+        <div class="nav-links">
+          <a href="../index.html" class="nav-item">HOME</a>
+          <a href="../test-harness/index.html" class="nav-item">WORKBENCH</a>
+          <a href="../dashboard/index.html" class="nav-item">TELEMETRY</a>
+          <a href="index.html" class="nav-item active">DOCS</a>
+        </div>
+
+        <a href="../test-harness/index.html" class="nav-cta-btn">LAUNCH WORKBENCH</a>
+      </nav>
+
+      <!-- Main Specification Header Section -->
+      <section class="doc-section">
+        <div class="doc-header-tag">// SYSTEM SPECIFICATION & ARCHITECTURE</div>
+        <h1 class="doc-main-title">Client-Side Browser Security & Contextual DLP</h1>
+        <p class="doc-lead">
+          SentinelX is a privacy-first Chromium browser security runtime (Manifest V3) engineered to intercept and prevent accidental or malicious exposure of proprietary credentials, source code, and PII to external AI tools and unapproved SaaS destinations.
+        </p>
+
+        <div class="math-pill">
+          Exposure Risk Score (0-100) = f(Data Sensitivity, Destination Trust, Volume, Action, Context)
+        </div>
+
+        <!-- 5 Engineering Pillars Grid -->
+        <h2 style="font-family:'Syne',sans-serif; font-size: 20px; font-weight:800; text-transform:uppercase; margin-top:16px;">
+          Core Architectural Pillars
+        </h2>
+
+        <div class="pillars-grid">
+          <div class="pillar-card">
+            <div class="pillar-num">01</div>
+            <div class="pillar-title">Shannon Entropy Analysis</div>
+            <div class="pillar-desc">Calculates localized information entropy H(X) &ge; 4.2 bits/char to catch zero-day API keys and passwords without static regex prefixes.</div>
+          </div>
+
+          <div class="pillar-card">
+            <div class="pillar-num">02</div>
+            <div class="pillar-title">Closed Shadow DOM HUD</div>
+            <div class="pillar-desc">All in-page dialogs mount inside attachShadow({mode: 'closed'}) preventing host page scripts from reading or manipulating security actions.</div>
+          </div>
+
+          <div class="pillar-card">
+            <div class="pillar-num">03</div>
+            <div class="pillar-title">Semantic Smart Masking</div>
+            <div class="pillar-desc">Replaces secrets with structured semantic tokens [STRIPE_SECRET_1] so developer prompts remain functional while credentials stay protected.</div>
+          </div>
+
+          <div class="pillar-card">
+            <div class="pillar-num">04</div>
+            <div class="pillar-title">Zero-Knowledge Telemetry</div>
+            <div class="pillar-desc">Plaintext never leaves the browser. SOC ingestion receives strictly anonymized SHA-256 event fingerprints and metadata.</div>
+          </div>
+
+          <div class="pillar-card">
+            <div class="pillar-num">05</div>
+            <div class="pillar-title">Sub-5ms Execution</div>
+            <div class="pillar-desc">Synchronous DOM paste interception evaluates heuristics and policy boundaries with zero perceived keystroke lag.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Technical Code Architecture -->
+      <section class="doc-section" style="background: var(--sage-showcase); color: var(--sage-dark);">
+        <div class="doc-header-tag" style="color:var(--sand-dark);">// ZERO-PLAINTEXT TELEMETRY SCHEMA</div>
+        <h2 style="font-family:'Syne',sans-serif; font-size: 24px; font-weight:800; text-transform:uppercase;">
+          Cryptographic Event Signature
+        </h2>
+        <p style="font-size: 13.5px; line-height: 1.5; opacity: 0.9;">
+          The enterprise ingest pipeline enforces strict zero-knowledge telemetry. The raw payload string is discarded immediately after client-side evaluation:
+        </p>
+
+        <pre class="code-callout">
+{
+  "event_id": "sx_evt_9a4f21e08b",
+  "timestamp": "2026-09-16T14:30:00Z",
+  "destination": "chat.openai.com",
+  "destination_category": "EXTERNAL_AI",
+  "risk_score": 97,
+  "action": "BLOCK",
+  "detected_tags": ["CREDENTIAL", "AWS_KEY", "HIGH_ENTROPY"],
+  "content_hash_prefix": "e3b0c44298fc1c14",
+  "content_length": 169,
+  "employee_id": "emp_corp_9021",
+  "device_id": "macbook-pro-asset-441"
+}
+        </pre>
+      </section>
+
+      <!-- Bottom Nav Return Strip -->
+      <div class="bento-card" style="background: var(--dark-module); color:#ffffff; padding: 24px 32px; display:flex; justify-content:space-between; align-items:center;">
+        <div>
+          <div style="font-family:'Syne',sans-serif; font-size: 16px; font-weight:800; text-transform:uppercase;">Ready to Test SentinelX?</div>
+          <div style="font-size:12px; color:#aaaaaa; margin-top:4px;">Experience real-time keystroke and paste interception in the interactive workbench.</div>
+        </div>
+        <a href="../test-harness/index.html" class="nav-cta-btn" style="background: var(--sand-hero); color: var(--sand-dark);">LAUNCH WORKBENCH ↗</a>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>

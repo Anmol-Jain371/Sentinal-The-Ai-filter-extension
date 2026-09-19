@@ -1,0 +1,97 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "title": "SentinelX Enterprise DLP Policy Configuration",
+  "description": "Managed configuration schema for Google Workspace Admin Console, Microsoft Intune, and Group Policy Objects (GPO).",
+  "properties": {
+    "employee_id": {
+      "title": "Employee Identity",
+      "description": "Employee email or corporate ID injected into all telemetry events for identity-layer audit trail. Set via GPO or Intune.",
+      "type": "string",
+      "default": ""
+    },
+    "device_id": {
+      "title": "Device / Machine Identity",
+      "description": "MDM device hostname or asset tag injected into telemetry for per-device incident attribution.",
+      "type": "string",
+      "default": ""
+    },
+    "telemetryBackendUrl": {
+      "title": "Telemetry Ingestion Endpoint",
+      "description": "Enterprise SOC backend endpoint for zero-knowledge anonymized metadata ingestion.",
+      "type": "string",
+      "default": "http://localhost:8000"
+    },
+    "enforceStrictDLP": {
+      "title": "Enforce Strict DLP (No User Bypass)",
+      "description": "When true, employees cannot override high-risk blocks via the SentinelX HUD.",
+      "type": "boolean",
+      "default": true
+    },
+    "auditModeOnly": {
+      "title": "Audit Mode Only (Silent Monitoring)",
+      "description": "Logs violations to SOC telemetry without showing the HUD or blocking user actions.",
+      "type": "boolean",
+      "default": false
+    },
+    "shannonEntropyThreshold": {
+      "title": "Shannon Entropy Sensitivity Threshold",
+      "description": "Entropy cutoff threshold (bits/symbol) for classifying zero-day high-entropy credentials.",
+      "type": "number",
+      "default": 4.2
+    },
+    "quarantineBlockedFiles": {
+      "title": "Immediate Quarantine of Sensitive File Extensions",
+      "description": "Instantly blocks drag-and-drop or file uploads of .env, .pem, .key, .pfx, and credentials.",
+      "type": "boolean",
+      "default": true
+    },
+    "approvedAIDomains": {
+      "title": "Corporate Approved AI Web Services",
+      "description": "List of sanctioned enterprise AI domains subject to standard monitoring rather than external block.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [
+        "copilot.microsoft.com"
+      ]
+    },
+    "restrictedDestinations": {
+      "title": "Restricted Egress Destinations",
+      "description": "Domains treated as untrusted external perimeter where credential transmission is forbidden.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [
+        "chat.openai.com",
+        "claude.ai",
+        "pastebin.com",
+        "gist.github.com"
+      ]
+    },
+    "customCompanyCodenames": {
+      "title": "Proprietary Project Codenames & M&A Watchlist",
+      "description": "Confidential corporate project codenames protected by client-side semantic NLP detection.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [
+        "Aurora-X",
+        "Project-Titan",
+        "Apollo-X",
+        "Merger-DueDiligence"
+      ]
+    },
+    "telemetrySampleRate": {
+      "title": "Telemetry Sampling Percentage",
+      "description": "Percentage of benign events to send for compliance baseline reporting (0-100).",
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100,
+      "default": 100
+    }
+  }
+}
